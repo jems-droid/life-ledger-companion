@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiCheckRouteImport } from './routes/ai-check'
+import { Route as AllergyRouteImport } from './routes/allergy'
+import { Route as SpendingRouteImport } from './routes/spending'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiCheckRoute = AiCheckRouteImport.update({
+  id: '/ai-check',
+  path: '/ai-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AllergyRoute = AllergyRouteImport.update({
+  id: '/allergy',
+  path: '/allergy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpendingRoute = SpendingRouteImport.update({
+  id: '/spending',
+  path: '/spending',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-check': typeof AiCheckRoute
+  '/allergy': typeof AllergyRoute
+  '/spending': typeof SpendingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-check': typeof AiCheckRoute
+  '/allergy': typeof AllergyRoute
+  '/spending': typeof SpendingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-check': typeof AiCheckRoute
+  '/allergy': typeof AllergyRoute
+  '/spending': typeof SpendingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/ai-check' | '/allergy' | '/spending'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/ai-check' | '/allergy' | '/spending'
+  id: '__root__' | '/' | '/ai-check' | '/allergy' | '/spending'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiCheckRoute: typeof AiCheckRoute
+  AllergyRoute: typeof AllergyRoute
+  SpendingRoute: typeof SpendingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-check': {
+      id: '/ai-check'
+      path: '/ai-check'
+      fullPath: '/ai-check'
+      preLoaderRoute: typeof AiCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/allergy': {
+      id: '/allergy'
+      path: '/allergy'
+      fullPath: '/allergy'
+      preLoaderRoute: typeof AllergyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/spending': {
+      id: '/spending'
+      path: '/spending'
+      fullPath: '/spending'
+      preLoaderRoute: typeof SpendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiCheckRoute: AiCheckRoute,
+  AllergyRoute: AllergyRoute,
+  SpendingRoute: SpendingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
